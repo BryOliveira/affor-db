@@ -55,3 +55,9 @@ CREATE TABLE affordability_calculations (
     estimated_years_to_afford   DECIMAL(5, 2) NOT NULL,
     last_updated                DATE DEFAULT 'CURRENT_DATE'
 );
+
+-- indices to speed up queries that we've thought up
+-- SUBJECT TO CHANGE!!
+CREATE INDEX idx_locations_loc_state ON locations (loc_state);
+CREATE INDEX idx_jobs_loc_state_posted_date ON jobs(loc_state, posted_date);
+CREATE INDEX idx_mortgage_rates_loc_state_median_rate ON mortgage_rates(loc_state, median_mortgage_rate);
