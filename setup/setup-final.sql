@@ -44,17 +44,21 @@ CREATE TABLE mortgage_rates (
     last_updated                DATE DEFAULT 'CURRENT_DATE',
 );
 
+-- Originally a table, but needs to be something more temporary 
+-- for the sake of tailoring the entries to the user query.
+-- Maybe just make a python function to calculate and display the calculation
+
 -- Table (maybe should be made a view) that
 -- calculates the affordability of a state based on
 -- the salary of job postings and the median mortgage costs.
-CREATE TABLE affordability_calculations (
-    calc_id                     INT AUTO_INCREMENT PRIMARY KEY,
-    job_id                      INT NOT NULL REFERENCES jobs,
-    loc_state                   VARCHAR(50) NOT NULL REFERENCES locations,
-    mortgage_id                 INT NOT NULL REFERENCES mortgage_rates,
-    estimated_years_to_afford   DECIMAL(5, 2) NOT NULL,
-    last_updated                DATE DEFAULT 'CURRENT_DATE'
-);
+-- CREATE TABLE affordability_calculations (
+--     calc_id                     INT AUTO_INCREMENT PRIMARY KEY,
+--     job_id                      INT NOT NULL REFERENCES jobs,
+--     loc_state                   VARCHAR(50) NOT NULL REFERENCES locations,
+--     mortgage_id                 INT NOT NULL REFERENCES mortgage_rates,
+--     estimated_years_to_afford   DECIMAL(5, 2) NOT NULL,
+--     last_updated                DATE DEFAULT 'CURRENT_DATE'
+-- );
 
 -- indices to speed up queries that we've thought up
 -- SUBJECT TO CHANGE!!

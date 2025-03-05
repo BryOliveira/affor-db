@@ -174,6 +174,40 @@ def manage_prices():
     '''
     return
 
+def add_job():
+    '''
+    Adds a new job listing to the database using terminal inputs
+    '''
+    return
+
+def edit_job(job_id):
+    '''
+    Edits an existing job listing by job_id
+
+    Parameters:
+    job_id (int): the job_id of the listing
+    '''
+    return
+
+def delete_job(job_id):
+    '''
+    Deletes a job listing by job_id
+
+    Parameters:
+    job_id (int): the job_id of the listing
+    '''
+    return
+
+def calculate_affordability(job_id):
+    '''
+    Uses the salary of the job connected to the job_id to calculate
+    the affordability of the location of the job.
+
+    Parameters:
+    job_id (int): the job_id of the listing
+    '''
+    return
+
 def quit_ui():
     """
     Quits the program, printing a good bye message to the user.
