@@ -42,7 +42,7 @@ This project is designed to manage and analyze mortgage rates and jobs across di
 
 5. Run our setup script to create the required SQL tables:
     ```sh
-    mysql -u your_username -p your_database_name < setup/setup-final.sql
+    mysql -u your_username -p your_database_name < setup/setup.sql
     ```
 
 ## Usage
