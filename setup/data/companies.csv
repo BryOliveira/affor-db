@@ -1,0 +1,359 @@
+company_id,company_name,sector,loc_state
+1,NM,Aerospace & Defense,NM
+2,University of Maryland Medical System,Health Care,MD
+3,KnowBe4,Business Services,FL
+4,PNNL,"Oil, Gas, Energy & Utilities",WA
+5,Affinity Solutions,Business Services,NY
+6,CyrusOne,Real Estate,TX
+7,ClearOne Advantage,Finance,MD
+8,Logic20/20,Business Services,CA
+9,Rochester Regional Health,Health Care,NY
+10,<intent>,Information Technology,NY
+11,Wish,Retail,CA
+12,ManTech,Business Services,VA
+13,Walmart,Retail,TX
+14,Yesler,Business Services,WA
+15,Takeda Pharmaceuticals,Biotech & Pharmaceuticals,MA
+16,Audible,Media,NJ
+17,Blueprint Medicines,Biotech & Pharmaceuticals,MA
+18,h2o.ai,Information Technology,CA
+19,Nuna,Information Technology,CA
+20,Pinnacol Assurance,Insurance,CO
+21,Porch,Information Technology,WA
+22,Health IQ,Insurance,TX
+23,Truckstop.com,Transportation & Logistics,IL
+24,SMC 3,Transportation & Logistics,KY
+25,Novetta,Information Technology,VA
+26,Pfizer,Biotech & Pharmaceuticals,MA
+27,First Tech Federal Credit Union,Finance,OR
+28,The Hanover Insurance Group,Insurance,MA
+29,Pfizer,Biotech & Pharmaceuticals,CT
+30,Amrock,Real Estate,MI
+31,Novartis,Biotech & Pharmaceuticals,MA
+32,Juniper Networks,Telecommunications,CA
+33,New England Biolabs,Biotech & Pharmaceuticals,MA
+34,Clarity Insights,Information Technology,CA
+35,Esri,Information Technology,CA
+36,Systems & Technology Research,Aerospace & Defense,MA
+37,Sartorius,Biotech & Pharmaceuticals,CA
+38,Lancer Insurance,Insurance,NY
+39,Sauce Labs,Information Technology,CA
+40,Persivia,-1,MA
+41,Edgewell Personal Care,Manufacturing,NJ
+42,Equity Residential,Real Estate,IL
+44,Visa Inc.,Information Technology,WA
+45,Intrado,Information Technology,CO
+46,Centauri,Aerospace & Defense,OH
+47,Caterpillar,Manufacturing,IL
+48,Zimmerman Advertising,Business Services,FL
+49,Liberty Mutual Insurance,Insurance,MA
+50,"Torch Technologies, Inc.",Aerospace & Defense,AL
+51,Swiss Re,Insurance,NY
+52,Northrop Grumman,Aerospace & Defense,CA
+53,Sartorius,Biotech & Pharmaceuticals,NM
+54,Netskope,Information Technology,CA
+55,1904labs,Information Technology,MO
+56,The David J. Joseph Company,Mining & Metals,OH
+57,USEReady,Business Services,NY
+58,Bill.com,Finance,CA
+59,Pacific Northwest National Laboratory,"Oil, Gas, Energy & Utilities",WA
+60,DICK'S Sporting Goods - Corporate,Retail,PA
+61,Berg Health,Biotech & Pharmaceuticals,MA
+62,Oversight Systems,Information Technology,GA
+63,C Space,Business Services,MA
+64,HP Inc.,Information Technology,WA
+65,SpringML,Information Technology,IN
+66,Grainger,Business Services,IL
+67,EAG Laboratories,Business Services,MO
+68,The Buffalo Group,Information Technology,VA
+69,Carmeuse,Mining & Metals,PA
+70,GNS Healthcare,Biotech & Pharmaceuticals,MA
+71,Peraton,Aerospace & Defense,VA
+72,Pactera,Information Technology,CA
+73,Nurx,Health Care,CA
+74,webfx.com,Business Services,PA
+75,Johns Hopkins University Applied Physics Laboratory,Aerospace & Defense,MD
+76,Productive Edge,Information Technology,IL
+77,Excella Consulting,Business Services,VA
+78,Gensco,Business Services,WA
+79,goTRG,Information Technology,FL
+80,NMR Consulting,Information Technology,AL
+81,iSeatz,Information Technology,LA
+82,Nektar Therapeutics,Biotech & Pharmaceuticals,CA
+83,TransUnion,Finance,GA
+84,IT Concepts,Information Technology,MD
+85,Scientific Research Corporation,Information Technology,MD
+86,General Dynamics Information Technology,Information Technology,MD
+87,MITRE,Government,VA
+88,DentaQuest,Insurance,WI
+89,Redjack,Information Technology,MD
+90,7Park Data,Business Services,NY
+91,Rapid Response Monitoring,Business Services,NY
+92,Trilogy Ed,Education,TX
+94,CapTech,Information Technology,NC
+95,American Axle & Manufacturing,Manufacturing,MI
+96,CentralReach,Information Technology,NJ
+97,Integrate,Information Technology,AZ
+98,Boys Town Hospital,Health Care,NE
+99,Demandbase,Information Technology,CA
+100,Sapphire Digital,Information Technology,NJ
+101,Formation,Information Technology,CA
+102,Autodesk,Information Technology,CA
+103,Beck's Hybrids,Agriculture & Forestry,IN
+104,DrFirst,Health Care,MD
+105,Object Partners,Business Services,MN
+106,L.A. Care Health Plan,Health Care,CA
+107,Red Ventures,Business Services,NC
+108,Quick Base,Information Technology,MA
+109,The E.W. Scripps Company,Media,OH
+111,Synagro,Business Services,MD
+112,Alliance Source Testing,Business Services,AL
+113,Accuride International,Manufacturing,CA
+114,Full Potential Solutions,Business Services,MO
+115,Visa Inc.,Information Technology,VA
+116,Maven Wave Partners,Business Services,IL
+117,"First Command Financial Services, Inc.",Finance,TX
+118,Pharmavite,Manufacturing,CA
+119,BioMarin Pharmaceutical,Biotech & Pharmaceuticals,CA
+120,Stratagem Group,Aerospace & Defense,CO
+121,PA Consulting,Business Services,NY
+122,Gridiron IT,Information Technology,FL
+123,Evolve Vacation Rental,Travel & Tourism,CO
+124,The Church of Jesus Christ of Latter-day Saints,Non-Profit,UT
+125,Maximus Real Estate Partners,Real Estate,CA
+126,Software Engineering Institute,Education,PA
+128,h2o.ai,Information Technology,IL
+129,PatientPoint,Business Services,OH
+130,BlueCross BlueShield of Tennessee,Insurance,TN
+131,KSM Consulting,Business Services,IN
+132,Cogo Labs,Information Technology,MA
+133,Church & Dwight,Manufacturing,NJ
+134,MassMutual,Insurance,MA
+135,Genentech,Biotech & Pharmaceuticals,CA
+136,Legal & General America,Insurance,MD
+137,Western Digital,Information Technology,CA
+138,Sunovion,Biotech & Pharmaceuticals,MA
+139,National Student Clearinghouse,Education,VA
+140,Tower Health,Health Care,PA
+141,State of Wisconsin Investment Board,Finance,WI
+142,Rubius Therapeutics,Biotech & Pharmaceuticals,MA
+143,OneMagnify,Business Services,MI
+144,IZEA,Business Services,FL
+145,Vionic Group,Retail,CA
+146,Takeda Pharmaceuticals,Biotech & Pharmaceuticals,CA
+147,Dodge Data & Analytics,Information Technology,NJ
+148,Plymouth Rock Assurance,Insurance,NJ
+149,CA-One Tech Cloud,Information Technology,CA
+150,Beebe Healthcare,Health Care,DE
+151,Argo Group US,Insurance,NY
+152,Associated Electric Cooperative,"Oil, Gas, Energy & Utilities",MO
+153,PennyMac,Finance,AZ
+154,Zest AI,Finance,CA
+155,DECISIVE ANALYTICS Corporation,Aerospace & Defense,AL
+156,Karyopharm Therapeutics Inc.,Biotech & Pharmaceuticals,MA
+157,Tempus Labs,Biotech & Pharmaceuticals,IL
+158,Recursion Pharmaceuticals,Biotech & Pharmaceuticals,UT
+159,P2 Energy Solutions,Information Technology,LA
+160,ClearEdge,Information Technology,MD
+161,Tapjoy,Information Technology,CA
+162,Credit Sesame,Information Technology,CA
+163,San Manuel Casino,"Arts, Entertainment & Recreation",CA
+164,Texas Health Huguley Hospital,Health Care,TX
+165,Teasdale Latin Foods,Manufacturing,IL
+166,Central California Alliance for Health,Health Care,CA
+167,Pilot Flying J Travel Centers LLC,Retail,TN
+168,Palermo's Pizza,Manufacturing,WI
+169,Advanced BioScience Laboratories,Biotech & Pharmaceuticals,MD
+170,Echo Global Logistics,Transportation & Logistics,IL
+171,Lockheed Martin,Aerospace & Defense,VA
+172,Acuity Insurance,Insurance,WI
+173,Fareportal,Travel & Tourism,NY
+174,"Veterans Affairs, Veterans Health Administration",Government,LA
+175,Credera,Business Services,TX
+176,Spectrum Communications and Consulting,Business Services,IL
+177,NCSOFT,Media,CA
+178,"Dayton Freight Lines, Inc.",Transportation & Logistics,OH
+179,Community Action Partnership of San Luis Obispo,Non-Profit,CA
+180,TrueAccord,Information Technology,CA
+181,DRB Systems,Information Technology,ID
+182,Corcentric,Information Technology,NJ
+183,U.Group,Information Technology,IN
+184,Systems Evolution Inc.,Business Services,NY
+185,Eventbrite,Information Technology,TN
+186,Centro,Information Technology,IL
+187,comScore,Business Services,OR
+188,SullivanCotter,Business Services,MN
+189,NPD,Business Services,NY
+190,Bakery Agency,Business Services,TX
+191,Blue Cross & Blue Shield of Rhode Island,Insurance,RI
+192,Boys Town,Non-Profit,NE
+194,Pro-Sphere Tek,Business Services,TX
+195,Ameritas Life Insurance Corp,Insurance,OH
+196,Genworth,Insurance,NC
+197,Trace Data,Insurance,CA
+198,Clearwater Analytics,Finance,ID
+199,"Tekvalley, Corp.",Information Technology,CA
+200,BWX Technologies,Aerospace & Defense,TN
+201,PennyMac,Finance,CA
+202,Vermeer,Manufacturing,IA
+203,L&T Infotech,Information Technology,CA
+204,OceanFirst Financial,Finance,NJ
+205,Sotheby's,Retail,NY
+207,CK-12 Foundation,Education,CA
+208,Opinion Dynamics,Business Services,CA
+209,Applied Information Sciences,Information Technology,TX
+210,WK Dickson,Business Services,SC
+212,Southwest Research Institute,Business Services,TX
+213,Muso,-1,CA
+214,The Integer Group,Business Services,TX
+215,Esri,Information Technology,VA
+216,Samba TV,Business Services,CA
+217,SV Microwave,Telecommunications,FL
+218,SpringML,Information Technology,VA
+219,Sumo Logic,Information Technology,TX
+221,Brighthouse Financial,Insurance,NC
+222,Affinity Solutions,Business Services,CA
+223,Citadel Federal Credit Union,Finance,PA
+224,CALIBRE Systems,Information Technology,VA
+225,Motorola Solutions,Information Technology,IL
+226,Reynolds American,Manufacturing,KY
+227,Infosys,Information Technology,CT
+228,Alignment Healthcare,Health Care,CA
+229,Cboe Global Markets,Finance,KS
+230,Guidepoint,Business Services,NY
+231,Cerus Corporation,Biotech & Pharmaceuticals,CA
+232,Vail Health,Health Care,CO
+233,AstraZeneca,Biotech & Pharmaceuticals,NY
+234,MathWorks,Information Technology,MA
+235,MetroStar Systems,Information Technology,MD
+236,Liberty Mutual Insurance,Insurance,IL
+237,Audentes Therapeutics,Biotech & Pharmaceuticals,CA
+238,Reynolds American,Manufacturing,NC
+239,National Interstate,Insurance,OH
+240,Moser Consulting,Business Services,IN
+241,TransUnion,Finance,IL
+242,Mcphail Associates,"Construction, Repair & Maintenance",MA
+243,Crown Bioscience,Biotech & Pharmaceuticals,CA
+244,HOVER,Information Technology,CA
+245,Q2 Solutions,Biotech & Pharmaceuticals,NY
+246,Q2 Solutions,Biotech & Pharmaceuticals,GA
+247,Arbella Insurance,Insurance,MA
+248,Kronos Bio,-1,MA
+249,Pfizer,Biotech & Pharmaceuticals,NY
+250,Associated Banc-Corp,Finance,WI
+251,Genesys,Information Technology,NC
+252,Moda Operandi,Retail,NY
+253,Liberty Mutual Insurance,Insurance,IN
+254,QK,Business Services,CA
+255,Santander,Finance,MA
+256,Tivity Health,Health Care,AZ
+257,BRMi,Information Technology,VA
+258,Luminar Technologies,Information Technology,FL
+259,"Emtec, Inc.",Information Technology,IL
+260,Veterans United Home Loans,Finance,MO
+261,Praetorian,Business Services,TX
+262,PA Consulting,Business Services,MA
+263,Agios Pharmaceuticals,Biotech & Pharmaceuticals,MA
+264,Glassdoor,Information Technology,CA
+265,Assurant,Insurance,OH
+266,F&G,Insurance,IA
+267,GreatAmerica Financial Services,Finance,IA
+268,Acceleron Pharma,Biotech & Pharmaceuticals,MA
+269,Strategic Employment Partners,Business Services,CA
+270,Catholic Health Initiatives,Health Care,NE
+271,FLEETCOR,Finance,TN
+272,Applied Research Laboratories,Education,TX
+273,Raytheon,Aerospace & Defense,AL
+274,RTI International,Business Services,NC
+275,TRANZACT,Business Services,NJ
+276,United BioSource,Biotech & Pharmaceuticals,PA
+277,Figure Eight,Information Technology,CA
+278,Royce Geospatial,Aerospace & Defense,VA
+279,Citi,Finance,NJ
+280,Sage Intacct,Information Technology,CA
+281,Scale AI,Information Technology,CA
+282,Change Healthcare,Information Technology,CA
+283,MZ,Information Technology,CA
+284,HG Insights,Information Technology,CA
+285,"1-800-FLOWERS.COM, Inc.",Business Services,NY
+286,CBS Interactive,Media,NY
+287,"Numeric, LLC",Business Services,PA
+288,Samsung Research America,Information Technology,CA
+289,Systems & Technology Research,Aerospace & Defense,VA
+290,Lorven Technologies Inc,Accounting & Legal,CA
+291,CareDx,Biotech & Pharmaceuticals,CA
+292,Serigor Inc.,Information Technology,CA
+293,Leidos,Aerospace & Defense,VA
+294,Beckman Coulter Diagnostics,Manufacturing,NY
+295,IHS Markit,Business Services,NY
+296,ALIN,-1,NY
+297,e-IT Professionals Corp.,Consumer Services,CA
+298,TechProjects,Information Technology,NY
+299,Biz2Credit Inc,Finance,NY
+300,PeoplesBank,Finance,MA
+301,Capgemini,Information Technology,NY
+302,GNY Insurance Companies,Insurance,NY
+303,"Conch Technologies, Inc",Business Services,MA
+304,Medidata Solutions,Information Technology,NY
+305,HP Inc.,Information Technology,OR
+306,Quartet Health,Information Technology,NY
+307,Success Academy Charter Schools,Education,NY
+308,AXION Healthcare Solutions,Health Care,NY
+309,ExecOnline,Education,NY
+310,Mteq,Aerospace & Defense,VA
+311,AstraZeneca,Biotech & Pharmaceuticals,MD
+312,Brillient,Information Technology,MD
+313,Entefy,Information Technology,CA
+314,Trace3,Information Technology,TX
+315,Saama Technologies Inc,Biotech & Pharmaceuticals,AZ
+316,Two Sigma,Finance,NY
+317,MITRE,Government,MA
+318,Strategic Financial Solutions,Consumer Services,NY
+319,"Remedy BPCI Partners, LLC.",Health Care,NY
+320,The Climate Corporation,Information Technology,CA
+321,Crossix Solutions,Business Services,NY
+322,Clarity Insights,Information Technology,NC
+323,GSK,Biotech & Pharmaceuticals,MA
+324,Factual,Information Technology,CA
+325,TriNet,Business Services,CA
+326,Signpost,Information Technology,NY
+327,Adobe,Information Technology,CA
+328,Sartorius,Biotech & Pharmaceuticals,CO
+329,Equian LLC,Health Care,TN
+330,Information Builders,Information Technology,NY
+331,Greenway Health,Information Technology,FL
+332,Confluent,Information Technology,CA
+333,Life360,Information Technology,CA
+334,IQVIA,Biotech & Pharmaceuticals,PA
+335,Riverside Research Institute,Government,OH
+336,Icon Health and Fitness,Manufacturing,UT
+337,Shipt,Consumer Services,AL
+338,Monte Rosa Therapeutics,-1,MA
+339,IntraEdge,Information Technology,AZ
+340,COUNTRY Financial,Insurance,IL
+341,Mentor Graphics,Information Technology,CA
+342,Maxar Technologies,Aerospace & Defense,VA
+343,ICW Group,Insurance,CA
+344,Exelixis,Biotech & Pharmaceuticals,CA
+345,Grand Rounds,Health Care,CA
+346,"SPINS, LLC",Business Services,IL
+347,DTCC,Finance,NJ
+348,Carilion Clinic,Health Care,VA
+349,DoubleVerify,Information Technology,NY
+350,Mitsubishi Electric Research Labs,Business Services,MA
+351,"Rodan and Fields, LLC",Retail,CA
+352,DESC,Non-Profit,WA
+353,Johns Hopkins Health Care,Health Care,MD
+354,Community Behavioral Health,Health Care,MD
+355,Western Digital,Information Technology,MD
+356,FORMA THERAPEUTICS,Biotech & Pharmaceuticals,MA
+357,Raytheon,Aerospace & Defense,MD
+358,Bridg,Information Technology,CA
+359,Charter Spectrum,Education,MO
+361,Solugenix Corporation,Information Technology,AZ
+362,West Coast University,Education,CA
+363,SoftBank Robotics,Manufacturing,CA
+364,SkySync,Information Technology,MI
+365,"DatamanUSA, LLC",Information Technology,WA
+366,23andMe,Biotech & Pharmaceuticals,CA
+367,Fivestars,Information Technology,CA
