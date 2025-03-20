@@ -1,7 +1,9 @@
--- TODO: document
-
-
+-- Drop existing methods
 DROP FUNCTION IF EXISTS get_avg_payment_length;
+DROP FUNCTION IF EXISTS calc_monthly_mortgage_payment;
+DROP PROCEDURE IF EXISTS add_job_listing;
+DROP TRIGGER IF EXISTS update_avg_salary_before_insert;
+
 DELIMITER !
 
 -- Calculates the average payment length in months
@@ -9,7 +11,7 @@ DELIMITER !
 -- savings_percent, and interest_rate.
 
 CREATE FUNCTION get_avg_payment_length(
-    avg_salary DECIMAL(10, 2)       
+    avg_salary DECIMAL(10, 2),       
     house_price DECIMAL(10, 2),      
     monthly_payment DECIMAL(15, 10), 
     savings_percent DECIMAL(10, 2),  
@@ -46,8 +48,6 @@ END !
 
 DELIMITER ;
 
-
-DROP FUNCTION IF EXISTS calc_monthly_mortgage_payment;
 DELIMITER !
 
 -- Calculates the monthly mortgage payment
@@ -84,7 +84,6 @@ END !
 
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS add_job_listing;
 DELIMITER !
 
 
@@ -130,7 +129,6 @@ END !
 
 DELIMITER ;
 
-DROP TRIGGER IF EXISTS update_avg_salary_before_insert;
 DELIMITER !
 
 

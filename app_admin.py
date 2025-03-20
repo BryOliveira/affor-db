@@ -114,7 +114,8 @@ class Admin:
 
     def add_job(self):
         """
-        Adds a new job listing to the database using terminal inputs
+        Adds a new job listing to the database using terminal inputs,
+        and calling the add_job_listing stored procedure.
         """
         cursor = self.conn.cursor()
         company_id = input('Enter company ID: ')
@@ -127,14 +128,10 @@ class Admin:
         avg_salary = input('Enter average salary: ')
         is_hourly = input('Is this an hourly paid job? (1 for Yes, 0 for No): ')
 
-        sql = '''
-        INSERT INTO jobs (company_id, job_title, job_description, loc_city, 
-                    loc_state, min_salary, max_salary, avg_salary, is_hourly)
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
-        '''
+        sql = "CALL add_job_listing(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
 
         try:
-            cursor.execute(sql, (company_id, job_title, job_description, loc_city, 
+            cursor.execute(sql, (company_id, job_title, job_description, loc_city,
                                  loc_state, min_salary, max_salary, avg_salary, is_hourly))
             self.conn.commit()
             print('Job added successfully.')

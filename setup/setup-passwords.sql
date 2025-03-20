@@ -1,3 +1,7 @@
+-- FIXME delete functions and stuff that already exist here
+
+
+-- so maybe it would be a good idea to use yours?
 -- CS 121 24wi: Password Management (A6 and Final Project)
 -- TODO: redo comments for final project
 -- (Provided) This function generates a specified number of characters for

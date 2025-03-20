@@ -8,6 +8,11 @@ DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS home_prices;
 
+-- Clean up views
+DROP VIEW IF EXISTS top_annual_salary_per_state;
+DROP VIEW IF EXISTS top_annual_salary_per_sector;
+
+
 -- Table containing the states and their median house prices.
 CREATE TABLE home_prices (
     loc_state               CHAR(2) PRIMARY KEY,
@@ -65,7 +70,6 @@ CREATE INDEX idx_mortgage_rates_loc_state_loc_city_date ON mortgage_rates(loc_st
 
 
 -- Creates a view to show the top annual salary for each state.
-DROP VIEW IF EXISTS top_annual_salary_per_state;
 CREATE VIEW top_annual_salary_per_state AS
 SELECT
     loc_state,
@@ -80,7 +84,6 @@ GROUP BY loc_state;
 
 
 -- Creates a view to show the top annual salary for each sector.
-DROP VIEW IF EXISTS top_annual_salary_per_sector;
 CREATE VIEW top_annual_salary_per_sector AS
 SELECT
     sector,
