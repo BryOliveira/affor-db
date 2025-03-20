@@ -27,20 +27,16 @@ class Admin:
             case 'q':
                 app.quit_ui()
             case 'j':
-                print('j pressed')
-                app.quit_ui()
+                self.manage_jobs()
             case 'm':
-                print('m pressed')
-                app.quit_ui()
+                self.manage_mortgages()
             case 'h':
-                print('h pressed')
-                app.quit_ui()
+                self.manage_prices()
             case 'c':
-                print('c pressed')
-                app.show_options()
+                app.show_options(self.client, self.conn)
             case _:
                 print('Other key pressed')
-                self.show_admin_options(self)
+                self.show_admin_options()
 
 
     def login(self):
@@ -53,11 +49,13 @@ class Admin:
         cursor = self.conn.cursor()
         user = input('Username: ')
         pwd = input('Password: ')
-        sql = 'CALL authenticate(\'%s\', \'%s\');' % (user, pwd)
+        sql = 'SELECT authenticate(%s, %s);' 
         try:
-            cursor.execute(sql)
-            result = cursor.fetchall()
+            cursor.execute(sql, (user, pwd))
+            result = cursor.fetchone()[0]
+
             if result:
+                print('Login successful')
                 self.show_admin_options()
             else:
                 print('Login failed.')
@@ -65,22 +63,41 @@ class Admin:
                     quit = input('Quit to client? [Y/N]').lower()
                     if quit == 'y':
                         self.client.show_options()
-                        break
+                        return
                     elif quit == 'n':
-                        self.login_attempt()
-                        break
+                        self.login()
+                        return
+                    else:
+                        print('Invalid input. Please enter Y or N.')
         except mysql.connector.Error as err:
-            if app.DEBUG:
-                sys.stderr(err)
-                sys.exit(1)
-            else:
-                sys.stderr('An error occured, try again later')
+            sys.stderr.write('Login error: ' + str(err) + '\n')
 
     def manage_jobs(self):
         """
         Sends you to a manage screen that lets you edit the jobs table.
         """
-        return
+        print('Managing job listings...')
+        print('  (a) - (A)dd a job listing')
+        print('  (e) - (E)dit a job listing')
+        print('  (d) - (D)elete a job listing')
+        print('  (b) - (B)ack to Admin Menu')
+        print()
+        ans = input('Enter an option: ').lower()
+
+        match ans:
+            case 'a':
+                self.add_job()
+            case 'e':
+                job_id = input("Enter Job ID to edit: ")
+                self.edit_job(job_id)
+            case 'd':
+                job_id = input("Enter Job ID to delete: ")
+                self.delete_job(job_id)
+            case 'b':
+                self.show_admin_options()
+            case _:
+                print('Invalid option. Try again.')
+                self.manage_jobs()
 
     def manage_mortgages(self):
         """
@@ -99,22 +116,94 @@ class Admin:
         """
         Adds a new job listing to the database using terminal inputs
         """
-        return
+        cursor = self.conn.cursor()
+        company_id = input('Enter company ID: ')
+        job_title = input('Enter job title: ')
+        job_description = input('Enter job description: (can be NULL)')
+        loc_city = input('Enter job location (city): ')
+        loc_state = input('Enter job location (state): ')
+        min_salary = input('Enter minimum salary: ')
+        max_salary = input('Enter maximum salary: ')
+        avg_salary = input('Enter average salary: ')
+        is_hourly = input('Is this an hourly paid job? (1 for Yes, 0 for No): ')
+
+        sql = '''
+        INSERT INTO jobs (company_id, job_title, job_description, loc_city, 
+                    loc_state, min_salary, max_salary, avg_salary, is_hourly)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);
+        '''
+
+        try:
+            cursor.execute(sql, (company_id, job_title, job_description, loc_city, 
+                                 loc_state, min_salary, max_salary, avg_salary, is_hourly))
+            self.conn.commit()
+            print('Job added successfully.')
+        except mysql.connector.Error as err:
+            sys.stderr.write('Error adding job: ' + str(err) + '\n')
+        
 
     def edit_job(self, job_id):
         """
         Edits an existing job listing by job_id
-
-        Parameters:
-        job_id (int): the job_id of the listing
         """
-        return
+        cursor = self.conn.cursor()
+        print("\nLeave fields blank to keep them unchanged.")
+
+        job_title = input("Enter new Job Title: ")
+        job_desc = input("Enter new Job Description: ")
+        min_salary = input("Enter new Minimum Salary: ")
+        max_salary = input("Enter new Maximum Salary: ")
+        avg_salary = input("Enter new Average Salary: ")
+        is_hourly = input("Is this an hourly job? (1 for Yes, 0 for No): ")
+        
+        update_attributes = []
+        values = []
+
+        if job_title:
+            update_attributes.append("job_title = %s")
+            values.append(job_title)
+        if job_desc:
+            update_attributes.append("job_description = %s")
+            values.append(job_desc)
+        if min_salary:
+            update_attributes.append("min_salary = %s")
+            values.append(min_salary)
+        if max_salary:
+            update_attributes.append("max_salary = %s")
+            values.append(max_salary)
+        if avg_salary:
+            update_attributes.append("avg_salary = %s")
+            values.append(avg_salary)
+        if is_hourly:
+            update_attributes.append("is_hourly = %s")
+            values.append(is_hourly)
+
+        if not update_attributes:
+            print('No changes made')
+            return
+
+        to_update = ', '.join(update_attributes)
+        sql = f'UPDATE jobs SET {to_update} WHERE job_id = %s'
+        values.append(job_id)
+
+        try:
+            cursor.execute(sql, tuple(values))
+            self.conn.commit()
+            print('Job updated successfully!')
+        except mysql.connector.Error as err:
+            sys.stderr.write('Error updating job: ' + str(err) + '\n')
+
 
     def delete_job(self, job_id):
         """
         Deletes a job listing by job_id
-
-        Parameters:
-        job_id (int): the job_id of the listing
         """
-        return
+        cursor = self.conn.cursor()
+        sql = "DELETE FROM jobs WHERE job_id = %s"
+
+        try:
+            cursor.execute(sql, (job_id,))
+            self.conn.commit()
+            print("Job deleted successfully!")
+        except mysql.connector.Error as err:
+            sys.stderr.write("Error deleting job: " + str(err) + '\n')

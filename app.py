@@ -18,7 +18,8 @@ import app_client
 # to an actual client. ***Set to False when done testing.***
 DEBUG = True
 # client = None
-global client
+
+
 # ----------------------------------------------------------------------
 # SQL Utility Functions
 # ----------------------------------------------------------------------
@@ -58,32 +59,32 @@ def get_conn():
 # ----------------------------------------------------------------------
 # Functions for Command-Line Options/Query Execution
 # ----------------------------------------------------------------------
-def example_query():
-    param1 = ''
-    cursor = conn.cursor()
-    # Remember to pass arguments as a tuple like so to prevent SQL
-    # injection.
-    sql = 'SELECT col1 FROM table WHERE col2 = \'%s\';' % (param1, )
-    try:
-        cursor.execute(sql)
-        # row = cursor.fetchone()
-        rows = cursor.fetchall()
-        for row in rows:
-            (col1val) = (row) # tuple unpacking!
-            # do stuff with row data
-    except mysql.connector.Error as err:
-        # If you're testing, it's helpful to see more details printed.
-        if DEBUG:
-            sys.stderr(err)
-            sys.exit(1)
-        else:
-            sys.stderr('An error occurred, please try again later')
+# def example_query():
+#     param1 = ''
+#     cursor = conn.cursor()
+#     # Remember to pass arguments as a tuple like so to prevent SQL
+#     # injection.
+#     sql = 'SELECT col1 FROM table WHERE col2 = \'%s\';' % (param1, )
+#     try:
+#         cursor.execute(sql)
+#         # row = cursor.fetchone()
+#         rows = cursor.fetchall()
+#         for row in rows:
+#             (col1val) = (row) # tuple unpacking!
+#             # do stuff with row data
+#     except mysql.connector.Error as err:
+#         # If you're testing, it's helpful to see more details printed.
+#         if DEBUG:
+#             sys.stderr(err)
+#             sys.exit(1)
+#         else:
+#             sys.stderr('An error occurred, please try again later')
 
 
 # ----------------------------------------------------------------------
 # Command-Line Functionality
 # ----------------------------------------------------------------------
-def show_options(client):
+def show_options(client, conn):
     """
     Displays options users can choose in the application.
     Currently accounting for switching to a search screen,
@@ -99,14 +100,14 @@ def show_options(client):
         case 'q':
             quit_ui()
         case 's':
-            client.search()
+            client.search(conn)
         case 'l':
             print('Login attempt.')
             admin = app_admin.Admin(client, conn)
             admin.login()
         case _:
-            print('Other key pressed')
-            show_options(client)
+            print('Invalid option, please try again.')
+            show_options(client, conn)
 
 def calculate_affordability(job_id):
     '''
@@ -123,20 +124,18 @@ def quit_ui():
     Quits the program, printing a good bye message to the user.
     """
     print('Good bye!')
-    exit()
+    sys.exit()
 
-
-def main(client):
+def main():
     """
-    Main function for starting things up.
+    Main function for starting the application.
     """
-    show_options(client)
+    global conn
+    global client
+    conn = get_conn()
+    client = app_client.Client(conn)
+    show_options(client, conn)
 
 
 if __name__ == '__main__':
-    # This conn is a global object that other functions can access.
-    # You'll need to use cursor = conn.cursor() each time you are
-    # about to execute a query with cursor.execute(<sqlquery>)
-    conn = get_conn()
-    client = app_client.Client(conn)
-    main(client)
+    main()
