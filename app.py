@@ -11,12 +11,14 @@ import mysql.connector
 # To get error codes from the connector, useful for user-friendly
 # error-handling
 import mysql.connector.errorcode as errorcode
+import app_admin
+import app_client
 
 # Debugging flag to print errors when debugging that shouldn't be visible
 # to an actual client. ***Set to False when done testing.***
 DEBUG = True
-
-
+# client = None
+global client
 # ----------------------------------------------------------------------
 # SQL Utility Functions
 # ----------------------------------------------------------------------
@@ -28,12 +30,12 @@ def get_conn():
     try:
         conn = mysql.connector.connect(
           host='localhost',
-          user='appadmin',
+          user='root',
           # Find port in MAMP or MySQL Workbench GUI or with
           # SHOW VARIABLES WHERE variable_name LIKE 'port';
           port='3306',  # this may change!
-          password='adminpw',
-          database='shelterdb' # replace this with your database name
+          password='root',
+          database='affordb' # replace this with your database name
         )
         print('Successfully connected.')
         return conn
@@ -77,10 +79,11 @@ def example_query():
         else:
             sys.stderr('An error occurred, please try again later')
 
+
 # ----------------------------------------------------------------------
 # Command-Line Functionality
 # ----------------------------------------------------------------------
-def show_options():
+def show_options(client):
     """
     Displays options users can choose in the application.
     Currently accounting for switching to a search screen,
@@ -96,107 +99,14 @@ def show_options():
         case 'q':
             quit_ui()
         case 's':
-            print('s pressed')
-            quit_ui()
+            client.search()
         case 'l':
-            print('l pressed')
-            show_admin_options()
+            print('Login attempt.')
+            admin = app_admin.Admin(client, conn)
+            admin.login()
         case _:
             print('Other key pressed')
-            show_options()
-
-def show_admin_options():
-
-    """
-    Displays options specific for admins and parses key inputs in this dash.
-    Current options include managing job listings, mortgage rates,
-    house prices, entering client mode, and quitting the app.
-    """
-    print('What would you like to do? ')
-    print('  (j) - Manage (J)ob listings')
-    print('  (m) - Manage (M)ortgage Rates')
-    print('  (h) - Manage (H)ouse Prices')
-    print('  (c) - Switch to (C)lient Mode')
-    print('  (q) - (q)uit')
-    print()
-    ans = input('Enter an option: ').lower()
-    match ans:
-        case 'q':
-            quit_ui()
-        case 'j':
-            print('j pressed')
-            quit_ui()
-        case 'm':
-            print('m pressed')
-            quit_ui()
-        case 'h':
-            print('h pressed')
-            quit_ui()
-        case 'c':
-            print('c pressed')
-            show_options()
-        case _:
-            print('Other key pressed')
-            show_admin_options()
-
-
-def search():
-    '''
-    Sends you to a search screen that lets you filter 
-    job listings by location.
-    '''
-    return
-
-def login():
-    '''
-    Sends you to a login screen that lets you input
-    an admin user and password, sending you back to
-    client screen if you fail and showing admin options if passed.
-    '''
-    return
-
-def manage_jobs():
-    '''
-    Sends you to a manage screen that lets you edit the jobs table.
-    '''
-    return
-
-def manage_mortgages():
-    '''
-    Sends you to a manage screen that lets you edit the mortgages table.
-    '''
-    return
-
-def manage_prices():
-    '''
-    Sends you to a manage screen that lets you edit the prices in 
-    the locations table.
-    '''
-    return
-
-def add_job():
-    '''
-    Adds a new job listing to the database using terminal inputs
-    '''
-    return
-
-def edit_job(job_id):
-    '''
-    Edits an existing job listing by job_id
-
-    Parameters:
-    job_id (int): the job_id of the listing
-    '''
-    return
-
-def delete_job(job_id):
-    '''
-    Deletes a job listing by job_id
-
-    Parameters:
-    job_id (int): the job_id of the listing
-    '''
-    return
+            show_options(client)
 
 def calculate_affordability(job_id):
     '''
@@ -216,11 +126,11 @@ def quit_ui():
     exit()
 
 
-def main():
+def main(client):
     """
     Main function for starting things up.
     """
-    show_options()
+    show_options(client)
 
 
 if __name__ == '__main__':
@@ -228,4 +138,5 @@ if __name__ == '__main__':
     # You'll need to use cursor = conn.cursor() each time you are
     # about to execute a query with cursor.execute(<sqlquery>)
     conn = get_conn()
-    main()
+    client = app_client.Client(conn)
+    main(client)

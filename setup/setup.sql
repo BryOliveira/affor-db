@@ -2,7 +2,6 @@
 --  with det up comments
 -- make sure NOT NULL and UNIQUE constraints are in place
 -- If an index is poorly chosen and clearly not tested, you will not receive full credit
--- TODO: at least 1 or more views
 
 -- Clean up tables if they already exist.
 DROP TABLE IF EXISTS mortgage_rates;
@@ -63,3 +62,6 @@ CREATE TABLE mortgage_rates (
 -- indices to speed up queries
 CREATE INDEX idx_jobs_loc_state_loc_city ON jobs(loc_state, loc_city);
 CREATE INDEX idx_mortgage_rates_loc_state_loc_city_date ON mortgage_rates(loc_state, loc_city, date_recorded);
+
+
+
