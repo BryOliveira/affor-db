@@ -1,5 +1,4 @@
 -- TODO: document
---  with det up comments
 -- make sure NOT NULL and UNIQUE constraints are in place
 -- If an index is poorly chosen and clearly not tested, you will not receive full credit
 
@@ -34,7 +33,7 @@ CREATE TABLE jobs (
     job_id                  INT AUTO_INCREMENT PRIMARY KEY,
     company_id              INT NOT NULL,
     job_title               VARCHAR(100) NOT NULL,
-    job_description         MEDIUMTEXT,
+    job_description         TEXT,
     loc_city                VARCHAR(100),
     loc_state               CHAR(2) NOT NULL,
     min_salary              DECIMAL(10, 2),
@@ -65,3 +64,33 @@ CREATE INDEX idx_mortgage_rates_loc_state_loc_city_date ON mortgage_rates(loc_st
 
 
 
+-- Creates a view to show the top annual salary for each state.
+DROP VIEW IF EXISTS top_annual_salary_per_state;
+CREATE VIEW top_annual_salary_per_state AS
+SELECT
+    loc_state,
+    MAX(
+        CASE
+            WHEN is_hourly = 0 THEN avg_salary * 1000
+            WHEN is_hourly = 1 THEN avg_salary * 40 * 52
+        END
+    ) AS max_annual_salary
+FROM jobs
+GROUP BY loc_state;
+
+
+-- Creates a view to show the top annual salary for each sector.
+DROP VIEW IF EXISTS top_annual_salary_per_sector;
+CREATE VIEW top_annual_salary_per_sector AS
+SELECT
+    sector,
+    MAX(
+        CASE
+            WHEN is_hourly = 0 THEN avg_salary * 1000
+            WHEN is_hourly = 1 THEN avg_salary * 40 * 52
+        END
+    ) AS max_annual_salary
+FROM jobs
+JOIN companies ON jobs.company_id = companies.company_id
+WHERE sector != '-1'
+GROUP BY sector ORDER BY max_annual_salary DESC;
