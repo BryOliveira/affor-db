@@ -1,206 +1,310 @@
 import sys 
 import mysql.connector 
 import mysql.connector.errorcode as errorcode
-import app_client
 import app
+from validation import *
+
+import mysql.connector
 
 class Admin:
-    def __init__(self, client, conn):
+    VALID_JOB_FIELDS = [
+        'job_title',
+        'job_description',
+        'loc_city',
+        'loc_state',
+        'min_salary',
+        'max_salary',
+        'avg_salary',
+        'is_hourly'
+    ]
+
+    def __init__(self, client, connection):
+        self.connection = connection
+        self.cursor = connection.cursor()
         self.client = client
-        self.conn = conn
 
-    def show_admin_options(self):
+    def create_admin_account(self):
         """
-        Displays options specific for admins and parses key inputs in this dash.
-        Current options include managing job listings, mortgage rates,
-        house prices, entering client mode, and quitting the app.
+        Create a new admin account 
         """
-        print('What would you like to do? ')
-        print('  (j) - Manage (J)ob listings')
-        print('  (m) - Manage (M)ortgage Rates')
-        print('  (h) - Manage (H)ouse Prices')
-        print('  (c) - Switch to (C)lient Mode')
-        print('  (q) - (q)uit')
-        print()
-        ans = input('Enter an option: ').lower()
-        match ans:
-            case 'q':
-                app.quit_ui()
-            case 'j':
-                self.manage_jobs()
-            case 'm':
-                self.manage_mortgages()
-            case 'h':
-                self.manage_prices()
-            case 'c':
-                app.show_options(self.client, self.conn)
-            case _:
-                print('Other key pressed')
-                self.show_admin_options()
+        print("\n=== Create New Admin Account ===")
+        
+        try:
+            new_username = get_str("Enter new admin username")
+            new_password = get_str("Enter new admin password")
+            
+            confirm = get_yes_no(f"Confirm creating new admin user '{new_username}'? (y/n)")
+            if not confirm:
+                print("Cancelled creating new admin.")
+                return
+            
+            self.cursor.callproc('sp_add_user', (new_username, new_password))
+            self.connection.commit()
 
+            print(f"Admin account '{new_username}' created successfully.")
+        
+        except mysql.connector.Error as err:
+            print(f"Database error: {err}")
+        except Exception as e:
+            print(f"Error: {e}")
 
     def login(self):
         """
-        Attempts a login by checking the user_info table.
-        Sends you to a login screen that lets you input
-        an admin user and password, letting you retry password input
-        or sending you back to client screen if desired.
+        Prompts the user for a username and password, and attempts to authenticate
+        them against the database.
         """
-        cursor = self.conn.cursor()
-        user = input('Username: ')
-        pwd = input('Password: ')
-        sql = 'SELECT authenticate(%s, %s);' 
-        try:
-            cursor.execute(sql, (user, pwd))
-            result = cursor.fetchone()[0]
+        print("\n=== Admin Login ===")
+        username = input("Enter Username: ").strip()
+        password = input("Enter Password: ").strip()
 
-            if result:
-                print('Login successful')
-                self.show_admin_options()
-            else:
-                print('Login failed.')
-                while True:
-                    quit = input('Quit to client? [Y/N]').lower()
-                    if quit == 'y':
-                        self.client.show_options()
-                        return
-                    elif quit == 'n':
-                        self.login()
-                        return
-                    else:
-                        print('Invalid input. Please enter Y or N.')
-        except mysql.connector.Error as err:
-            sys.stderr.write('Login error: ' + str(err) + '\n')
-
-    def manage_jobs(self):
-        """
-        Sends you to a manage screen that lets you edit the jobs table.
-        """
-        print('Managing job listings...')
-        print('  (a) - (A)dd a job listing')
-        print('  (e) - (E)dit a job listing')
-        print('  (d) - (D)elete a job listing')
-        print('  (b) - (B)ack to Admin Menu')
-        print()
-        ans = input('Enter an option: ').lower()
-
-        match ans:
-            case 'a':
-                self.add_job()
-            case 'e':
-                job_id = input("Enter Job ID to edit: ")
-                self.edit_job(job_id)
-            case 'd':
-                job_id = input("Enter Job ID to delete: ")
-                self.delete_job(job_id)
-            case 'b':
-                self.show_admin_options()
-            case _:
-                print('Invalid option. Try again.')
-                self.manage_jobs()
-
-    def manage_mortgages(self):
-        """
-        Sends you to a manage screen that lets you edit the mortgages table.
-        """
-        return
-
-    def manage_prices(self):
-        """
-        Sends you to a manage screen that lets you edit the prices in 
-        the locations table.
-        """
-        return
-
-    def add_job(self):
-        """
-        Adds a new job listing to the database using terminal inputs,
-        and calling the add_job_listing stored procedure.
-        """
-        cursor = self.conn.cursor()
-        company_id = input('Enter company ID: ')
-        job_title = input('Enter job title: ')
-        job_description = input('Enter job description: (can be NULL)')
-        loc_city = input('Enter job location (city): ')
-        loc_state = input('Enter job location (state): ')
-        min_salary = input('Enter minimum salary: ')
-        max_salary = input('Enter maximum salary: ')
-        avg_salary = input('Enter average salary: ')
-        is_hourly = input('Is this an hourly paid job? (1 for Yes, 0 for No): ')
-
-        sql = "CALL add_job_listing(%s, %s, %s, %s, %s, %s, %s, %s, %s)"
-
-        try:
-            cursor.execute(sql, (company_id, job_title, job_description, loc_city,
-                                 loc_state, min_salary, max_salary, avg_salary, is_hourly))
-            self.conn.commit()
-            print('Job added successfully.')
-        except mysql.connector.Error as err:
-            sys.stderr.write('Error adding job: ' + str(err) + '\n')
-        
-
-    def edit_job(self, job_id):
-        """
-        Edits an existing job listing by job_id
-        """
-        cursor = self.conn.cursor()
-        print("\nLeave fields blank to keep them unchanged.")
-
-        job_title = input("Enter new Job Title: ")
-        job_desc = input("Enter new Job Description: ")
-        min_salary = input("Enter new Minimum Salary: ")
-        max_salary = input("Enter new Maximum Salary: ")
-        avg_salary = input("Enter new Average Salary: ")
-        is_hourly = input("Is this an hourly job? (1 for Yes, 0 for No): ")
-        
-        update_attributes = []
-        values = []
-
-        if job_title:
-            update_attributes.append("job_title = %s")
-            values.append(job_title)
-        if job_desc:
-            update_attributes.append("job_description = %s")
-            values.append(job_desc)
-        if min_salary:
-            update_attributes.append("min_salary = %s")
-            values.append(min_salary)
-        if max_salary:
-            update_attributes.append("max_salary = %s")
-            values.append(max_salary)
-        if avg_salary:
-            update_attributes.append("avg_salary = %s")
-            values.append(avg_salary)
-        if is_hourly:
-            update_attributes.append("is_hourly = %s")
-            values.append(is_hourly)
-
-        if not update_attributes:
-            print('No changes made')
+        if not username or not password:
+            print("Username and password cannot be empty")
             return
 
-        to_update = ', '.join(update_attributes)
-        sql = f'UPDATE jobs SET {to_update} WHERE job_id = %s'
-        values.append(job_id)
-
         try:
-            cursor.execute(sql, tuple(values))
-            self.conn.commit()
-            print('Job updated successfully!')
+            self.cursor.execute("SELECT authenticate(%s, %s)",
+                                (username, password))
+            result = self.cursor.fetchone()
+
+            if result and result[0]:
+                print(f"Login successful as {username}.")
+                self.show_admin_menu()
+            else:
+                print("Invalid username or password.")
         except mysql.connector.Error as err:
-            sys.stderr.write('Error updating job: ' + str(err) + '\n')
+            print(f"Database error: {err}")
 
-
-    def delete_job(self, job_id):
+    def show_admin_menu(self):
         """
-        Deletes a job listing by job_id
+        Displays the admin menu and handles user input for various admin tasks.
         """
-        cursor = self.conn.cursor()
-        sql = "DELETE FROM jobs WHERE job_id = %s"
+        while True:
+            print("\n=== Admin Menu ===")
+            print("  (j) Manage Job Listings")
+            print("  (m) Update Mortgage Rates")
+            print("  (h) Update Housing Prices")
+            print("  (c) Create New Admin Account")
+            print("  (t) Test Client Mode")
+            print("  (q) Quit Admin Menu")
 
+            choice = input("Choose an option: ").lower()
+
+            if choice == 'j':
+                self.manage_job_listings()
+            elif choice == 'm':
+                self.update_mortgage_rates()
+            elif choice == 'h':
+                self.update_housing_prices()
+            elif choice == 'a':
+                self.create_admin_account()
+            elif choice == 't':
+                self.test_client_mode()
+            elif choice == 'q':
+                print("Leaving Admin Menu.")
+                break
+            else:
+                print("Invalid selection. Try again.")
+
+
+    def manage_job_listings(self):
+        """
+        Displays the job listings management menu and handles user input for
+        adding, editing, or deleting job listings.
+        """
+        while True:
+            print("\n--- Manage Job Listings ---")
+            print("  (a) Add Job")
+            print("  (e) Edit Job")
+            print("  (d) Delete Job")
+            print("  (b) Back to Admin Menu")
+
+            choice = input("Choose an option: ").lower()
+
+            if choice == 'a':
+                self.add_job()
+            elif choice == 'e':
+                self.edit_job()
+            elif choice == 'd':
+                self.delete_job()
+            elif choice == 'b':
+                break
+            else:
+                print("Invalid selection. Try again.")
+
+    def add_job(self):
+        print("\n=== Add New Job ===")
         try:
-            cursor.execute(sql, (job_id,))
-            self.conn.commit()
-            print("Job deleted successfully!")
-        except mysql.connector.Error as err:
-            sys.stderr.write("Error deleting job: " + str(err) + '\n')
+            company_id = get_int("Company ID")
+
+            job_title = get_str("Job Title")
+            job_description = get_str("Job Description", nullable=True)
+
+            loc_city = get_str("City", nullable=True)
+            loc_state = get_state("State (2-letter abbreviation)")
+
+            print("\nEnter salary in thousands for annual or dollars for hourly (e.g. 50 for 50k or 25 for $25/hour)\n")
+
+            min_salary = get_positive_float("Minimum Salary")
+            max_salary = get_positive_float("Maximum Salary")
+
+            if min_salary > max_salary:
+                print("Minimum salary cannot be greater than maximum salary.")
+                return
+
+            avg_salary_input = input("Average Salary (or leave blank): ").strip()
+
+            if avg_salary_input == "":
+                avg_salary = None
+            else:
+                avg_salary = validate_positive_float(avg_salary_input)
+                if not min_salary <= avg_salary <= max_salary:
+                    print("Average salary must be between minimum and maximum salary.")
+                    return
+
+            is_hourly = get_yes_no("Is the job hourly? (y/n)")
+
+            self.cursor.callproc('add_job_listing', [
+                company_id, job_title, job_description, loc_city, loc_state,
+                min_salary, max_salary, avg_salary, is_hourly
+            ])
+            self.connection.commit()
+
+            print(f"Job added successfully under company ID: {company_id}")
+
+        except Exception as err:
+            print(f"Error: {err}")
+
+
+    def edit_job(self):
+        print("\n=== Edit Job ===")
+        try:
+            job_id = get_int("Enter Job ID to edit")
+
+            self.cursor.execute("SELECT * FROM jobs WHERE job_id = %s", (job_id,))
+            job = self.cursor.fetchone()
+
+            if not job:
+                print("Job not found.")
+                return
+
+            print(f"\nEditable fields: {', '.join([field for field in self.VALID_JOB_FIELDS if field != 'avg_salary'])}")
+            column = input("Field to edit: ").strip()
+
+            if column == 'avg_salary':
+                print("You cannot manually edit avg_salary.")
+                return
+
+            if column not in self.VALID_JOB_FIELDS:
+                print("Invalid field name.")
+                return
+
+            new_value_input = input(f"Enter new value for {column}: ").strip()
+
+            if column in ['min_salary', 'max_salary']:
+                new_value = validate_positive_float(new_value_input)
+            elif column == 'is_hourly':
+                if new_value_input.lower() not in ['y', 'n']:
+                    print("Invalid input. Enter 'y' or 'n'.")
+                    return
+                new_value = 1 if new_value_input.lower() == 'y' else 0
+            else:
+                new_value = new_value_input or None  # Allow nullable for text fields
+
+            if column == 'min_salary':
+                existing_max = job[self.VALID_JOB_FIELDS.index('max_salary') + 2]  # offset +2 for correct tuple index
+                if new_value > existing_max:
+                    print(f"min_salary cannot be greater than existing max_salary ({existing_max}).")
+                    return
+            if column == 'max_salary':
+                existing_min = job[self.VALID_JOB_FIELDS.index('min_salary') + 2]
+                if new_value < existing_min:
+                    print(f"max_salary cannot be less than existing min_salary ({existing_min}).")
+                    return
+
+            confirm = get_yes_no(f"\nConfirm update of {column} to '{new_value}'? (y/n)")
+            if not confirm:
+                print("Update cancelled.")
+                return
+
+            sql = f"UPDATE jobs SET {column} = %s WHERE job_id = %s"
+            self.cursor.execute(sql, (new_value, job_id))
+            self.connection.commit()
+
+            if self.cursor.rowcount > 0:
+                print(f"Job ID {job_id} updated: {column} set to '{new_value}'")
+            else:
+                print("No changes made.")
+
+        except Exception as err:
+            print(f"Error: {err}")
+
+
+    def delete_job(self):
+        """
+        Prompts the user for a job ID and deletes the corresponding job listing
+        from the database.
+        """
+        print("\n=== Delete Job ===")
+        try:
+            job_id = get_int("Enter Job ID to delete")
+
+            qry = "SELECT * FROM jobs WHERE job_id = %s"
+            self.cursor.execute(qry, (job_id,))
+            job = self.cursor.fetchone()
+            if not job:
+                print("Job not found.")
+                return
+            print("Job Details:")
+            print(f"  Job ID: {job[0]}")
+            print(f"  Job Title: {job[2]}")
+            print(f"  Company ID: {job[1]}")
+            print(f"  Description: {job[3]}")
+            
+            confirm = get_yes_no(f"Confirm deletion of job {job_id}? (y/n)")
+
+            sql = "DELETE FROM jobs WHERE job_id = %s"
+            self.cursor.execute(sql, (job_id,))
+            self.connection.commit()
+
+            print("Job deleted successfully.")
+        except Exception as err:
+            print(f"Error: {err}")
+
+    def update_mortgage_rates(self):
+        print("\n=== Update Mortgage Rates ===")
+        try:
+            loc_state = get_state("Enter state abbreviation (2-letter)")
+            loan_term_years = get_choice("Enter loan term (10, 15, 30)", [10, 15, 30])
+            date_recorded = get_str("Enter date recorded (YYYY-MM-DD)")
+            annual_interest_rate = get_float_in_range("Annual interest rate %", 0, 100)
+
+            sql = """
+                INSERT INTO mortgage_rates (loc_state, loan_term_years, date_recorded, annual_interest_rate)
+                VALUES (%s, %s, %s, %s)
+            """
+            self.cursor.execute(sql, (loc_state, loan_term_years, date_recorded, annual_interest_rate))
+            self.connection.commit()
+            print("Mortgage rate updated successfully.")
+        except Exception as err:
+            print(f"Error: {err}")
+
+    def update_housing_prices(self):
+        print("\n=== Update Housing Prices ===")
+        try:
+            loc_state = get_state("Enter state abbreviation (2-letter)")
+            median_house_price = get_positive_float("Enter new median house price")
+
+            sql = """
+                UPDATE home_prices
+                SET median_house_price = %s
+                WHERE loc_state = %s
+            """
+            self.cursor.execute(sql, (median_house_price, loc_state))
+            self.connection.commit()
+            print("Housing price updated successfully.")
+        except Exception as err:
+            print(f"Error: {err}")
+
+    def test_client_mode(self):
+        print("\n=== Test Client Mode ===")
+        self.client.search_jobs(True)

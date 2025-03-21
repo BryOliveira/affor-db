@@ -22,10 +22,10 @@ LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
 (company_id, job_title, job_description, loc_city, loc_state, min_salary, max_salary, avg_salary, is_hourly);
 
-LOAD DATA LOCAL INFILE 'data/mortgage_payments.csv'
+LOAD DATA LOCAL INFILE 'data/mortgage_rates.csv'
 INTO TABLE mortgage_rates
 FIELDS TERMINATED BY ',' 
 ENCLOSED BY '"' 
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS
-(loc_city, loc_state, date_recorded, rate_5, rate_10, rate_20);
+(loc_state, loan_term_years, date_recorded, annual_interest_rate);

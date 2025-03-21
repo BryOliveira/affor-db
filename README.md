@@ -59,14 +59,13 @@ flowchart TD
     A[Start Program] --> B{User Type?}
     B -- Client --> C[Search]
     B -- Admin --> H[Admin]
+    B -- See general stats ---> BB[by state, sector] --> B
 
-    C --> D[Filter by State/Salary]
-    D --> E[View Job Listings]
-    E --> F{Interested?}
-    F -- Yes --> G[Check Home Affordability]
-    G --> I[View Mortgage Rates]
-    I --> J[Estimate Years to Afford]
-    J --> K[Save/Exit]
+    C --> D[by Job, City, State, Salary]
+
+    D --> F{Interested?}
+    F -- Yes, select by id --> G[Check Home Affordability]
+ 
 
     F -- No --> C[Search Again]
     
@@ -79,13 +78,11 @@ flowchart TD
     N --> Q[Alter Home Prices]
     O --> R[Return to Admin Menu]
     
-    
     P --> R
     Q --> R
     AC --> R
     R --> H
     
-    K --> Z[Exit]
 
 ```
 
