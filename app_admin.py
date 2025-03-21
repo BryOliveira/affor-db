@@ -4,8 +4,6 @@ import mysql.connector.errorcode as errorcode
 import app
 from validation import *
 
-import mysql.connector
-
 class Admin:
     VALID_JOB_FIELDS = [
         'job_title',
@@ -95,7 +93,7 @@ class Admin:
                 self.update_mortgage_rates()
             elif choice == 'h':
                 self.update_housing_prices()
-            elif choice == 'a':
+            elif choice == 'c':
                 self.create_admin_account()
             elif choice == 't':
                 self.test_client_mode()
