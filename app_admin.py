@@ -1,7 +1,5 @@
-import sys 
 import mysql.connector 
-import mysql.connector.errorcode as errorcode
-import app
+import mysql.connector.errorcode
 from validation import *
 
 class Admin:
@@ -138,7 +136,6 @@ class Admin:
             job_description = get_str("Job Description", nullable=True)
             loc_city = get_str("City", nullable=True)
             loc_state = get_state("State (2-letter abbreviation)")
-            
             print("\nEnter salary in thousands for annual or dollars for hourly (e.g. 50 for 50k or 25 for $25/hour)\n")
             min_salary = get_positive_float("Minimum Salary")
             max_salary = get_positive_float("Maximum Salary")
@@ -221,10 +218,10 @@ class Admin:
             if self.cursor.rowcount > 0:
                 print(f"Job ID {job_id} updated: {column} set to '{new_value}'!")
             else:
-                print("No changes made.")
+                print("No changeswere made.")
 
-        except Exception as err:
-            print(f"Error: {err}")
+        except Exception as e:
+            print(f"Error: {e}")
 
 
     def delete_job(self):
@@ -256,8 +253,8 @@ class Admin:
             self.connection.commit()
 
             print("Job deleted successfully.")
-        except Exception as err:
-            print(f"Error: {err}")
+        except Exception as e:
+            print(f"Error: {e}")
 
     def update_mortgage_rates(self):
         print("\n=== Update Mortgage Rates ===")
@@ -273,9 +270,9 @@ class Admin:
             """
             self.cursor.execute(sql, (loc_state, loan_term_years, date_recorded, annual_interest_rate))
             self.connection.commit()
-            print("Mortgage rate updated successfully.")
-        except Exception as err:
-            print(f"Error: {err}")
+            print("Mortgage rate updated successfully!")
+        except Exception as e:
+            print(f"Error: {e}")
 
     def update_housing_prices(self):
         print("\n=== Update Housing Prices ===")
@@ -291,8 +288,8 @@ class Admin:
             self.cursor.execute(sql, (median_house_price, loc_state))
             self.connection.commit()
             print("Housing price updated successfully.")
-        except Exception as err:
-            print(f"Error: {err}")
+        except Exception as e:
+            print(f"Error: {e}")
 
     def test_client_mode(self):
         print("\n=== Test Client Mode ===")
