@@ -65,11 +65,14 @@ No data is written to the users system outside of in MySQL and this repository.
 
     mysql> source setup.sql
 
+    mysql> source load-data.sql
+
+    mysql> source setup-passwords.sql
+    
     mysql> source grant-permissions.sql
 
     mysql> source setup-routines.sql
 
-    mysql> source load-data.sql
     ```
 
 ---
