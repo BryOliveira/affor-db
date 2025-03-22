@@ -28,8 +28,8 @@ class Admin:
         print("\n=== Create New Admin Account ===")
         
         try:
-            new_username = get_str("Enter new admin username")
-            new_password = get_str("Enter new admin password")
+            new_username: str = get_str("Enter new admin username")
+            new_password: str = get_str("Enter new admin password")
             
             confirm = get_yes_no(f"Confirm creating new admin user '{new_username}'? (y/n)")
             if not confirm:
@@ -41,10 +41,9 @@ class Admin:
 
             print(f"Admin account '{new_username}' created successfully.")
         
-        except mysql.connector.Error as err:
-            print(f"Database error: {err}")
-        except Exception as e:
-            print(f"Error: {e}")
+        except ValueError:
+            print("Failed to create new admin account"
+                  +"\nAre you sure you entered")
 
     def login(self):
         """

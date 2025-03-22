@@ -100,26 +100,12 @@ CREATE PROCEDURE add_job_listing(
 )
 BEGIN
     INSERT INTO jobs (
-        company_id,
-        job_title,
-        job_description,
-        city,
-        loc_state,
-        min_salary,
-        max_salary,
-        avg_salary,
-        is_hourly
+        company_id,job_title,job_description,city,loc_state,
+        min_salary,max_salary,avg_salary,is_hourly
     )
     VALUES (
-        in_company_id,
-        in_job_title,
-        in_job_description,
-        in_city,
-        in_loc_state,
-        in_min_salary,
-        in_max_salary,
-        in_avg_salary,
-        in_is_hourly
+        in_company_id,in_job_title,in_job_description,in_city,
+        in_loc_state,in_min_salary,in_max_salary,in_avg_salary,in_is_hourly
     );
 END !
 

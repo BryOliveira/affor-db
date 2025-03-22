@@ -1,5 +1,3 @@
-# validation.py
-
 def get_int(prompt, nullable=False, default=None):
     """
     Prompt user for an integer input, optionally allowing null.

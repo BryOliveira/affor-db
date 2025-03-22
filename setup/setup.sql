@@ -2,16 +2,19 @@
 -- make sure NOT NULL and UNIQUE constraints are in place
 -- If an index is poorly chosen and clearly not tested, you will not receive full credit
 
+-- Clean up views if they already exist.
+-- GIVES warnings when the views dont exist
+-- which is fine.
+DROP VIEW IF EXISTS latest_mortgage_rates;
+DROP VIEW IF EXISTS v_jobs_with_annual_salary;
+DROP VIEW IF EXISTS top_annual_salary_per_sector;
+DROP VIEW IF EXISTS top_annual_salary_per_state;
+
 -- Clean up tables if they already exist.
 DROP TABLE IF EXISTS mortgage_rates;
 DROP TABLE IF EXISTS jobs;
 DROP TABLE IF EXISTS companies;
 DROP TABLE IF EXISTS home_prices;
-
--- Clean up views
-DROP VIEW IF EXISTS top_annual_salary_per_state;
-DROP VIEW IF EXISTS top_annual_salary_per_sector;
-DROP VIEW IF EXISTS v_jobs_with_annual_salary;
 
 -- Table containing the states and their median house prices.
 CREATE TABLE home_prices (
@@ -28,8 +31,7 @@ CREATE TABLE companies (
     
     FOREIGN KEY (loc_state) REFERENCES home_prices(loc_state)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    CONSTRAINT unique_company_name UNIQUE (company_name)
+        ON UPDATE CASCADE
 );
 
 -- Jobs Table: Contains job listings with salary information and location details
@@ -66,8 +68,8 @@ CREATE TABLE mortgage_rates (
         ON UPDATE CASCADE
 );
 
--- indices to speed up queries
-CREATE INDEX idx_jobs_state_city ON jobs(loc_state, loc_city);
+-- -- indices to speed up queries
+-- CREATE INDEX idx_jobs_state_city ON jobs(loc_state, loc_city);
 
 -- Creates a view to show the top annual salary for each state.
 CREATE VIEW top_annual_salary_per_state AS
@@ -98,7 +100,10 @@ WHERE sector != '-1'
 GROUP BY sector ORDER BY max_annual_salary DESC;
 
 -- Creates a view with annualized salary for each job.
--- as there's a variable amount that are hourly and salaried
+-- the data within the table is
+-- either hourly or annual, it makes more sense to standardize
+-- it.
+
 CREATE VIEW v_jobs_with_annual_salary AS
 SELECT
     j.job_id,
