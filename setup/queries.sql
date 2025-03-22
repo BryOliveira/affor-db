@@ -1,3 +1,5 @@
+-- both queries used in project and some misc
+
 -- Retrieves job details for a given job ID
 -- note that salary is either hourly or annual
 -- annual is in units of thousands
