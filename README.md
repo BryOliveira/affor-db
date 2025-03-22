@@ -49,7 +49,7 @@ This project is designed to manage and analyze mortgage rates and jobs across di
 
 ### Running the Application
 ```sh
-python app-template-24wi.py
+python app.py
 ```
 
 ### Application Overview Flowchart
