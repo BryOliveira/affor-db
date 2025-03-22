@@ -24,7 +24,6 @@ WHERE loc_state = 'CA';
 -- aggregates the average salary for each job title that appears more
 -- than once in the jobs table (top 10)
 -- RA
-
 SELECT job_title, ROUND(AVG(avg_salary)*1000,2) AS avg_salary
 FROM v_jobs_with_annual_salary
 GROUP BY job_title

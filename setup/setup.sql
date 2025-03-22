@@ -1,7 +1,3 @@
--- TODO: document
--- make sure NOT NULL and UNIQUE constraints are in place
--- If an index is poorly chosen and clearly not tested, you will not receive full credit
-
 -- Clean up views if they already exist.
 -- GIVES warnings when the views dont exist
 -- which is fine.
@@ -68,8 +64,8 @@ CREATE TABLE mortgage_rates (
         ON UPDATE CASCADE
 );
 
--- -- indices to speed up queries
--- CREATE INDEX idx_jobs_state_city ON jobs(loc_state, loc_city);
+-- index to speed up queries
+CREATE INDEX idx_jobs_state_city ON jobs(loc_state, loc_city);
 
 -- Creates a view to show the top annual salary for each state.
 CREATE VIEW top_annual_salary_per_state AS

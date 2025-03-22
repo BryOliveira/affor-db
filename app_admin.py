@@ -129,50 +129,41 @@ class Admin:
                 print("Invalid selection. Try again.")
 
     def add_job(self):
+        """
+        Prompts the user for job details and adds a new job listing to the database."""
         print("\n=== Add New Job ===")
         try:
             company_id = get_int("Company ID")
-
             job_title = get_str("Job Title")
             job_description = get_str("Job Description", nullable=True)
-
             loc_city = get_str("City", nullable=True)
             loc_state = get_state("State (2-letter abbreviation)")
-
+            
             print("\nEnter salary in thousands for annual or dollars for hourly (e.g. 50 for 50k or 25 for $25/hour)\n")
-
             min_salary = get_positive_float("Minimum Salary")
             max_salary = get_positive_float("Maximum Salary")
-
             if min_salary > max_salary:
-                print("Minimum salary cannot be greater than maximum salary.")
+                print("MIN salary cannot be greater than MAX salary.")
                 return
-
-            avg_salary_input = input("Average Salary (or leave blank): ").strip()
-
-            if avg_salary_input == "":
-                avg_salary = None
-            else:
-                avg_salary = validate_positive_float(avg_salary_input)
-                if not min_salary <= avg_salary <= max_salary:
-                    print("Average salary must be between minimum and maximum salary.")
-                    return
-
+            avg_salary = get_positive_float("Average Salary (or leave blank)", nullable=True)
+            if avg_salary and not (min_salary <= avg_salary <= max_salary):
+                print("Average salary must be between minimum and maximum salary.")
+                return
             is_hourly = get_yes_no("Is the job hourly? (y/n)")
-
             self.cursor.callproc('add_job_listing', [
                 company_id, job_title, job_description, loc_city, loc_state,
                 min_salary, max_salary, avg_salary, is_hourly
             ])
             self.connection.commit()
-
             print(f"Job added successfully under company ID: {company_id}")
-
         except Exception as err:
             print(f"Error: {err}")
 
-
     def edit_job(self):
+        """
+        Prompts the user for a job ID and allows them to edit the corresponding
+        job listing in the database.
+        """
         print("\n=== Edit Job ===")
         try:
             job_id = get_int("Enter Job ID to edit")
@@ -210,15 +201,15 @@ class Admin:
             if column == 'min_salary':
                 existing_max = job[self.VALID_JOB_FIELDS.index('max_salary') + 2]  # offset +2 for correct tuple index
                 if new_value > existing_max:
-                    print(f"min_salary cannot be greater than existing max_salary ({existing_max}).")
+                    print(f"min_salary CANNOT be greater than existing max_salary ({existing_max}).")
                     return
             if column == 'max_salary':
                 existing_min = job[self.VALID_JOB_FIELDS.index('min_salary') + 2]
                 if new_value < existing_min:
-                    print(f"max_salary cannot be less than existing min_salary ({existing_min}).")
+                    print(f"max_salary CANNOT be less than existing min_salary ({existing_min}).")
                     return
 
-            confirm = get_yes_no(f"\nConfirm update of {column} to '{new_value}'? (y/n)")
+            confirm = get_yes_no(f"\CONFIRM update of {column} to '{new_value}'? (y/n)")
             if not confirm:
                 print("Update cancelled.")
                 return
@@ -228,7 +219,7 @@ class Admin:
             self.connection.commit()
 
             if self.cursor.rowcount > 0:
-                print(f"Job ID {job_id} updated: {column} set to '{new_value}'")
+                print(f"Job ID {job_id} updated: {column} set to '{new_value}'!")
             else:
                 print("No changes made.")
 
@@ -251,6 +242,7 @@ class Admin:
             if not job:
                 print("Job not found.")
                 return
+            
             print("Job Details:")
             print(f"  Job ID: {job[0]}")
             print(f"  Job Title: {job[2]}")
