@@ -62,14 +62,15 @@ BEGIN
     DECLARE stored_hash BINARY(64);
     DECLARE computed_hash BINARY(64);
 
-    IF NOT EXISTS (SELECT 1 FROM user_info WHERE username = username) THEN
+    IF NOT EXISTS (SELECT 1 FROM user_info u WHERE u.username = username) THEN
         RETURN 0;
     END IF;
 
     SELECT salt, password_hash
     INTO stored_salt, stored_hash
-    FROM user_info
-    WHERE username = username;
+    FROM user_info u
+    WHERE u.username = username
+    LIMIT 1;
 
     SET computed_hash = SHA2(CONCAT(stored_salt, password), 256);
 
