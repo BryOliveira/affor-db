@@ -100,3 +100,11 @@ WHERE loc_state = 'CA';
 -- Deletes a job by job_id 
 DELETE FROM jobs
 WHERE job_id = 373;
+
+-- Retrieves all company IDs (we did not implement in the project)
+SELECT 
+    company_id, 
+    company_name, 
+    sector 
+FROM companies
+ORDER BY company_id LIMIT 10;

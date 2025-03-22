@@ -10,6 +10,25 @@ Partly sourced from Kaggle and Zillow except for the mortgage rates. That is pro
 
 No data is written to the users system outside of in MySQL and this repository.
 
+
+## Potentially (questionable) functionality
+
+When signed in as an `admin`, and you choose to add a job, you need a Company Id. Companies can also not be added so this information is inacessible.
+
+With some more time, administrators could be company-specific and *know* their IDs, so inserting jobs that way could be done.
+
+For the time being, company ids can be found in `companies.csv` (a few companies of the same name with different ids--different branches).
+
+Some examples to use when testing admin functinality:
+
+```sh
+id | name | sector | state
+315 | Saama Technologies Inc | Biotech & Pharmaceuticals | AZ
+316 | Two Sigma | Finance | NY
+317 | MITRE | Government | MA
+318 | Strategic Financial Solutions | Consumer Services |NY
+```
+
 ---
 
 ## Setup
@@ -68,7 +87,7 @@ No data is written to the users system outside of in MySQL and this repository.
     mysql> source load-data.sql
 
     mysql> source setup-passwords.sql
-    
+
     mysql> source grant-permissions.sql
 
     mysql> source setup-routines.sql
