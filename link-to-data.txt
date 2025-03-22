@@ -1,13 +1,8 @@
-
-is this even right?
-
-honestly i should organize this at some point
-
+Original data here:
 https://www.zillow.com/research/data/
+https://www.kaggle.com/datasets/thedevastator/jobs-dataset-from-glassdoor
+
+some of our modifications:
 https://docs.google.com/spreadsheets/d/19_ftEhaH5mtIEyMlHXDH8v_crUxAYROuvqbs3BR-skc/edit?gid=724754660#gid=724754660
 https://docs.google.com/spreadsheets/d/1ruyn34BsatbhfA3AwegPXkwh4k4bFUkAN_xpaqBqFEo/edit?usp=sharing
 https://docs.google.com/spreadsheets/d/1BGawhoUGZc4yntUoqTz5cJKTDhK8WDam3KsvY6cQdYk/edit?usp=sharing
-
-
-https://www.zillow.com/research/data/
-https://www.kaggle.com/datasets/thedevastator/jobs-dataset-from-glassdoor

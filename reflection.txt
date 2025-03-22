@@ -1,7 +1,0 @@
-ER diagram
-
-(optional) functional dependency theorem and normal forms
-
-relational algebra queries (3+ with joins/aggregation/updates)
-
-design choices, trade-offs, limitations
